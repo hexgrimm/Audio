@@ -37,6 +37,7 @@ namespace HexGrimmDev.Audio
                 }
             }
         }
+
         bool IAudioController.MusicEnabled
         {
             get { return musicEnabled.Value; }
@@ -57,6 +58,7 @@ namespace HexGrimmDev.Audio
                 }
             }
         }
+
         float IAudioController.SoundVolume
         {
             get { return soundVolume.Value; }
@@ -82,6 +84,7 @@ namespace HexGrimmDev.Audio
                 }
             }
         }
+
         float IAudioController.MusicVolume
         {
             get { return musicVolume.Value; }
@@ -112,6 +115,7 @@ namespace HexGrimmDev.Audio
         {
             Initialization();
         }
+
         void IDisposable.Dispose()
         {
             sourceMedia.Clear();
@@ -157,6 +161,7 @@ namespace HexGrimmDev.Audio
             sourceMedia.Add(data.AudioCode, data);
             return audioCodeIndex;
         }
+
         void IMusicPlayer.StopPlayingMusicClip(int audioCode)
         {
             if (!sourceMedia.ContainsKey(audioCode))
@@ -167,6 +172,7 @@ namespace HexGrimmDev.Audio
             s.Source.Stop();
             SmartDestroy(s.Source);
         }
+
         void IMusicPlayer.PausePlayingClip(int audioCode)
         {
             if (!sourceMedia.ContainsKey(audioCode))
@@ -176,6 +182,7 @@ namespace HexGrimmDev.Audio
             s.Source.Pause();
             s.OnPause = true;
         }
+
         void IMusicPlayer.ResumeClipIfInPause(int audioCode)
         {
             if (!sourceMedia.ContainsKey(audioCode))
@@ -185,6 +192,7 @@ namespace HexGrimmDev.Audio
             s.Source.UnPause();
             s.OnPause = false;
         }
+
         bool IMusicPlayer.IsMusicClipCodePlaying(int audioCode)
         {
             if (!sourceMedia.ContainsKey(audioCode))
@@ -225,6 +233,7 @@ namespace HexGrimmDev.Audio
             sourceMedia.Add(data.AudioCode, data);
             return audioCodeIndex;
         }
+
         int IAudioPlayer.PlayAudioClip3D(AudioClip clip, Vector3 position, float maxSoundDistance, float volumeProportion, bool looped)
         {
             if (volumeProportion > 1)
@@ -267,6 +276,7 @@ namespace HexGrimmDev.Audio
             sourceMedia.Add(data.AudioCode, data);
             return audioCodeIndex;
         }
+
         void IAudioPlayer.StopPlayingClip(int audioCode)
         {
             if (!sourceMedia.ContainsKey(audioCode)) 
@@ -285,6 +295,7 @@ namespace HexGrimmDev.Audio
                 SmartDestroy(s.Source);
             }
         }
+
         bool IAudioPlayer.IsAudioClipCodePlaying(int audioCode)
         {
             if (!sourceMedia.ContainsKey(audioCode))
@@ -293,10 +304,12 @@ namespace HexGrimmDev.Audio
             var s = sourceMedia[audioCode];
             return s.Source.isPlaying;
         }
+
         void IAudioPlayer.SetAudioListenerToPosition(Vector3 position)
         {
             presenter.AudioListener.transform.position = position;
         }
+
         void IAudioPlayer.SetSourcePositionTo(int audioCode, Vector3 destinationPos)
         {
             if (!sourceMedia.ContainsKey(audioCode))
@@ -323,6 +336,7 @@ namespace HexGrimmDev.Audio
             listener.transform.SetParent(presenter.transform);
             presenter.AudioListener = listener;
         }
+
         private void ScanForEndedSources()
         {
             var todel = new Dictionary<int, AudioSourceData>();
@@ -345,6 +359,7 @@ namespace HexGrimmDev.Audio
                     SmartDestroy(source.Source);
             }
         }
+        
         private void SmartDestroy(Object obj)
         {
             #if UNITY_EDITOR
